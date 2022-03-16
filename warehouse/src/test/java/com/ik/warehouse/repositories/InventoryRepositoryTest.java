@@ -20,7 +20,7 @@ import com.ik.warehouse.domain.Inventory;
  *
  */
 @DataJpaTest
-public class InventoryControllerTest {
+public class InventoryRepositoryTest {
 
 	@Autowired
 	private InventoryRepository inventoryRepository;

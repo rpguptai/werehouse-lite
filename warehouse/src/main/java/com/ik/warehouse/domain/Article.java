@@ -6,7 +6,9 @@ package com.ik.warehouse.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -16,6 +18,8 @@ import lombok.Setter;
 @Document
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Article {
 	@Id
 	private long articleId;

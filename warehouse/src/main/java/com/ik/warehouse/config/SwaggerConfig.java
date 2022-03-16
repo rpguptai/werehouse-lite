@@ -32,7 +32,7 @@ public class SwaggerConfig {
 
 	private ApiInfo getApiInfo() {
 		return new ApiInfoBuilder().title("Swagger UI for Warehouse System").version("1.0").description("This is light weight warehouse system APIs")
-				.contact(new Contact("Test", "http://www.Test.com", "test@email.com"))
+				.contact(new Contact("Ravi Gupta", "http://www.dummyValue.com", "info@dummyValue.com"))
 				.license("Apache License Version 2.0").build();
 	}
 
