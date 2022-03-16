@@ -1,5 +1,5 @@
 # Werehouse
-This is lightweight POC for warehouse system
+This is lightweight POC for warehouse backend.
 
 ## Design
 
