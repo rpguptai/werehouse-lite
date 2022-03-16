@@ -31,7 +31,7 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo getApiInfo() {
-		return new ApiInfoBuilder().title("Swagger UI for Warehouse System").version("1.0").description("This is very light weight warehouse system APIs")
+		return new ApiInfoBuilder().title("Swagger UI for Warehouse System").version("1.0").description("This is light weight warehouse system APIs")
 				.contact(new Contact("Test", "http://www.Test.com", "test@email.com"))
 				.license("Apache License Version 2.0").build();
 	}

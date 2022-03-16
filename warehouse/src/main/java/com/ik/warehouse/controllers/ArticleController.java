@@ -3,11 +3,19 @@
  */
 package com.ik.warehouse.controllers;
 
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ik.warehouse.domain.Article;
+import com.ik.warehouse.exception.ResourceNotFoundException;
 import com.ik.warehouse.repositories.ArticleRepository;
 import com.ik.warehouse.utils.ArticleMappingUtils;
 import com.ik.warehouse.vo.ArticleVo;
@@ -28,9 +36,25 @@ public class ArticleController {
 	@Autowired
 	ArticleRepository articleRepository;
 
-	@GetMapping(value = "/api/products/{articleName}")
+	@GetMapping(value = "/api/articles/{id}")
 	@ApiOperation(value = "Get Article by article ID")
-	public ArticleVo getProduct(@PathVariable Long id) {
-		return ArticleMappingUtils.getArticleVoFromDomain(articleRepository.findById(String.valueOf(id)).get());
+	public ArticleVo getArticle(@PathVariable Long id) {
+		
+		Optional<Article> article = articleRepository.findById(String.valueOf(id));
+		if(article.isPresent()) {
+			return ArticleMappingUtils.getArticleVoFromDomain(article.get());
+		}else {
+			throw new ResourceNotFoundException("Article Details not found for " + id);
+		}
+		
+	}
+	
+	
+	@PostMapping(value = "/api/articles/")
+	@ApiOperation(value = "save an article information")
+	@Transactional
+	public ArticleVo saveArticle(@RequestBody ArticleVo articleVo) {
+		articleRepository.save(ArticleMappingUtils.getArticleFromVo(articleVo));
+		return articleVo;
 	}
 }

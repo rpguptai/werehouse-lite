@@ -23,9 +23,15 @@ import lombok.extern.slf4j.Slf4j;
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(value = ResourceNotFoundException.class)
-	public ResponseEntity<Response> blogNotFoundException(ResourceNotFoundException resourceNotFountException) {
+	public ResponseEntity<Response> handleResourceException(ResourceNotFoundException resourceNotFountException) {
 		log.error(resourceNotFountException.getMessage());
-		return new ResponseEntity<Response>(new Response(resourceNotFountException.getMessage()), HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(new Response(resourceNotFountException.getMessage()), HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(value = Exception.class)
+	public ResponseEntity<Response> handleGeneralException(Exception exception) {
+		log.error(exception.getMessage());
+		return new ResponseEntity<>(new Response("There is issue : "+exception.getMessage()+ " , Please contact application team"), HttpStatus.NOT_FOUND);
 	}
 
 	@Getter

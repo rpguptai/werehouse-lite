@@ -25,12 +25,13 @@ import com.ik.warehouse.vo.InventoryVo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Ravi
  *
  */
-
+@Slf4j
 @RestController
 @Api(tags = "API for Inventories")
 public class InventoryController {
@@ -75,7 +76,7 @@ public class InventoryController {
 			inventory.get().setStock(inventoryVo.getStock());
 			inventoryRepository.save(inventory.get());
 		} else {
-			throw new RuntimeException();
+			throw new ResourceNotFoundException("Inventory data not found for " + inventoryVo.getArtId());
 		}
 		return inventoryVo;
 	}

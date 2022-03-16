@@ -13,7 +13,11 @@ import com.ik.warehouse.vo.InventoryVo;
  *
  */
 public class InventoryMappingUtils {
-	
+
+	private InventoryMappingUtils() {
+
+	}
+
 	public static Inventory getInventoryFromVo(InventoryVo inventoryVo) {
 		Inventory inventory = new Inventory();
 		inventory.setId(inventoryVo.getArtId());

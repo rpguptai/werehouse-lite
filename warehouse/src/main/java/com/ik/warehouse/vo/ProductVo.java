@@ -26,5 +26,5 @@ public class ProductVo {
     @JsonProperty("name")
     private String name;
     @JsonProperty("contain_articles")
-    private List<ProductArticleVo> productArticleVoList = null;
+    private List<ProductArticleVo> productArticleVoList;
 }

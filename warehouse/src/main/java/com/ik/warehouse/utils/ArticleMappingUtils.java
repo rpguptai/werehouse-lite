@@ -11,6 +11,10 @@ import com.ik.warehouse.vo.ArticleVo;
  *
  */
 public class ArticleMappingUtils {
+	
+	private ArticleMappingUtils() {
+		
+	}
 
 	public static Article getArticleFromVo(ArticleVo articleVo) {
 		Article article = new Article();
