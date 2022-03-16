@@ -3,7 +3,8 @@ This is lightweight POC for warehouse backend.
 
 ## Design
 
-![IMG-0021](https://user-images.githubusercontent.com/55003223/158689852-c46f838e-aacc-4417-aa28-7013e74233b2.jpg)
+
+![IMG-00232-7](https://user-images.githubusercontent.com/55003223/158695138-2750908f-640b-4c0a-bb59-ac33914c6b9b.jpg)
 
 
 ## Assumptions and points
