@@ -1,5 +1,10 @@
-# werehouse-lite
+# Werehouse
 This is lightweight POC for warehouse system
+
+## Design
+
+![IMG-0021](https://user-images.githubusercontent.com/55003223/158689852-c46f838e-aacc-4417-aa28-7013e74233b2.jpg)
+
 
 ## Assumptions and points
 
@@ -10,3 +15,19 @@ This is lightweight POC for warehouse system
 5. Junit and error handling is not completely done in this version.
 6. I am calling Inventory service directly from product service but in real world this should be done via discovery mechanism.
 7. For this implementation, we don’t have descriptive functional and non-functional requirements, so I skipped service layer and calling DB layer directly form controller.
+
+## Swagger : http://localhost:8080/swagger-ui.html#/
+
+![sw1](https://user-images.githubusercontent.com/55003223/158690046-f87f5b77-fa56-4bae-bb4e-ef3efec046fd.PNG)
+
+## Product Service:
+
+![sw2](https://user-images.githubusercontent.com/55003223/158690196-22dd7a4b-939d-4683-bbe8-b3a1dbbd5f8e.PNG)
+
+## Inventories Service:
+
+![sw3](https://user-images.githubusercontent.com/55003223/158690333-f6bf6fee-3f3e-45cb-954a-28d7f5683e89.PNG)
+
+## Article Service:
+
+![sw4](https://user-images.githubusercontent.com/55003223/158690555-c024c3c0-4886-404f-a12b-87632aded5eb.PNG)
