@@ -9,7 +9,7 @@ This is lightweight POC for warehouse backend.
 
 ## Assumptions and points
 
-1. This design is very high level without understanding of any NFRs, based on NFRs design and technical choices might be totally changed.
+1. This design is very high level without understanding of any NFRs, based on detailed NFRs, design and technical choices might be totally changed.
 2. I have used in memory database H2 for RDBMS and embedded MongoDB for document-based NoSQL.
 3. I have created a service for Article also, just to demonstrate my design, in my opinion Product and Article information can go in NoSQL DB.
 4. I have not implemented the verification of article mentioned in the Inventory is actually there in Articles.
