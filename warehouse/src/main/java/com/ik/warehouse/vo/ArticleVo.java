@@ -25,7 +25,7 @@ import lombok.Setter;
 public class ArticleVo {
 	
 	 	@JsonProperty("art_id")
-	    private Long artId;
+	    private String artId;
 	    @JsonProperty("name")
 	    private String name;
 	    @JsonProperty("description")

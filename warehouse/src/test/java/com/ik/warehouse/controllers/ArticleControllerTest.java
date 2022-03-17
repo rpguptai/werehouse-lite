@@ -38,7 +38,7 @@ public class ArticleControllerTest {
 
 	@Test
 	public void getArticleById_when_Article_available() throws Exception {
-		Optional<Article> a1 = Optional.ofNullable(new Article(2, "Article1", "This is sample Article"));
+		Optional<Article> a1 = Optional.ofNullable(new Article("2", "Article1", "This is sample Article"));
 		Mockito.when(articleRepository.findById(String.valueOf(2))).thenReturn(a1);
 
 		mockMvc.perform(get("/api/articles/{id}", 2)).andExpect(status().isOk())

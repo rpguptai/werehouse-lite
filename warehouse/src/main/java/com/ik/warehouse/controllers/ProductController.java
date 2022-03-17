@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,12 @@ import lombok.extern.slf4j.Slf4j;
 @Api(tags = "API for Products")
 public class ProductController {
 
+	@Value( "${inventory.get.endpoint}" )
+	private String inventoryGetEndpoint;
+	
+	@Value( "${inventory.put.endpoint}" )
+	private String inventoryPutEndpoint;
+	
 	@Autowired
 	private ProductRepository productRepository;
 
@@ -55,7 +62,7 @@ public class ProductController {
 		if (product.isPresent()) {
 			return ProductMapperUtils.getProductVoFromDomain(product.get());
 		} else {
-			throw new ResourceNotFoundException("Product not found with name " + productName);
+			throw new ResourceNotFoundException("No Product not found with name " + productName);
 		}
 	}
 
@@ -86,10 +93,15 @@ public class ProductController {
 	@GetMapping(value = "/api/productStock/{productName}")
 	@ApiOperation(value = "Get quantities available for single product")
 	public ProductStockVo getProductStock(@PathVariable String productName) {
-		Product product = productRepository.findById(productName).get();
-		long productStock = product.getProductArticles().stream()
-				.map(x -> getPartialCount(x.getArticleId(), x.getAmount())).min(Long::compare).orElse((long) 0);
-		return new ProductStockVo(product.getName(), productStock);
+		Optional<Product> product = productRepository.findById(productName);
+		if(product.isPresent()) {
+			long productStock = product.get().getProductArticles().stream()
+					.map(x -> getPartialCount(x.getArticleId(), x.getAmount())).min(Long::compare).orElse((long) 0);
+			return new ProductStockVo(product.get().getName(), productStock);
+		}else {
+			throw new ResourceNotFoundException("There is no product with name " + productName);
+		}
+		
 	}
 
 	@GetMapping(value = "/api/productStocks")
@@ -102,26 +114,41 @@ public class ProductController {
 	@PutMapping(value = "/api/sellProducts/{productName}")
 	@ApiOperation(value = "sell a product with product name")
 	public void sellProduct(@PathVariable String productName) {
-		Product product = productRepository.findById(productName).get();
-		product.getProductArticles().stream().forEach(x -> updateInventories(x.getArticleId(), x.getAmount()));
+		Optional<Product> product = productRepository.findById(productName);
+		if(product.isPresent()) {
+			product.get().getProductArticles().stream().forEach(x -> updateInventories(x.getArticleId(), x.getAmount()));
+		}else {
+			throw new ResourceNotFoundException("Product not found with name " + productName);
+		}
+		
 	}
 
 	private void updateInventories(long inventoryId, long count) {
-		String url = "http://localhost:8080/api/inventories/" + String.valueOf(inventoryId);
-		InventoryVo inventoryVo = restTemplate.getForObject(url, InventoryVo.class);
-		inventoryVo.setStock(inventoryVo.getStock() - count);
-		restTemplate.put("http://localhost:8080/api/inventories/", inventoryVo);
+		String url = inventoryGetEndpoint + inventoryId;
+		
+		Optional<InventoryVo> inventoryVo = Optional.ofNullable(restTemplate.getForObject(url, InventoryVo.class));
+		if(inventoryVo.isPresent()) {
+			inventoryVo.get().setStock(inventoryVo.get().getStock() - count);
+		}else {
+			throw new ResourceNotFoundException("Inventory not found with id " + inventoryId);
+		}
+		restTemplate.put(inventoryPutEndpoint, inventoryVo);
 	}
 	
 	private long getPartialCount(long inventoryId, long count) {
-		String url = "http://localhost:8080/api/inventories/" + String.valueOf(inventoryId);
-		InventoryVo inventoryVo = null;
+		String url = inventoryGetEndpoint + inventoryId;
+		Optional<InventoryVo> inventoryVo;
 		try {
-			inventoryVo = restTemplate.getForObject(url, InventoryVo.class);
+			inventoryVo =Optional.ofNullable(restTemplate.getForObject(url, InventoryVo.class));
 		} catch (HttpClientErrorException ex) {
 			return 0;
 		}
-		return (long) Math.floor(inventoryVo.getStock() / count);
+		if(inventoryVo.isPresent()) {
+			return (long) Math.floor(inventoryVo.get().getStock() / count);
+		}else {
+			return 0;
+		}
+		
 	}
 
 }

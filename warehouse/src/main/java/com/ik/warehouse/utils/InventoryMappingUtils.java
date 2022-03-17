@@ -3,9 +3,7 @@
  */
 package com.ik.warehouse.utils;
 
-import com.ik.warehouse.domain.Article;
 import com.ik.warehouse.domain.Inventory;
-import com.ik.warehouse.vo.ArticleVo;
 import com.ik.warehouse.vo.InventoryVo;
 
 /**

@@ -38,9 +38,9 @@ public class ArticleController {
 
 	@GetMapping(value = "/api/articles/{id}")
 	@ApiOperation(value = "Get Article by article ID")
-	public ArticleVo getArticle(@PathVariable Long id) {
+	public ArticleVo getArticle(@PathVariable String id) {
 		
-		Optional<Article> article = articleRepository.findById(String.valueOf(id));
+		Optional<Article> article = articleRepository.findById(id);
 		if(article.isPresent()) {
 			return ArticleMappingUtils.getArticleVoFromDomain(article.get());
 		}else {

@@ -3,9 +3,6 @@
  */
 package com.ik.warehouse.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 /**
  * @author Ravi
  *

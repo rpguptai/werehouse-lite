@@ -22,7 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Article {
 	@Id
-	private long articleId;
+	private String articleId;
 	private String articleName;
 	private String articleDescription;
 }
